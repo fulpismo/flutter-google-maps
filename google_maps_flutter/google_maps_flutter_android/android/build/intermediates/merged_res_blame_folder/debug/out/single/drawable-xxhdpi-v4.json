@@ -1,0 +1,26 @@
+[
+    {
+        "merged": "/Users/luizcarvalho/Documents/work/repos/plugins/packages/google_maps_flutter/google_maps_flutter_android/android/build/intermediates/res/merged/debug/drawable-xxhdpi-v4/common_google_signin_btn_icon_dark_normal_background.9.png",
+        "source": "/Users/luizcarvalho/.gradle/caches/transforms-3/4ae88a2ce76a230a4535c562832197a0/transformed/jetified-play-services-base-18.0.1/res/drawable-xxhdpi-v4/common_google_signin_btn_icon_dark_normal_background.9.png"
+    },
+    {
+        "merged": "/Users/luizcarvalho/Documents/work/repos/plugins/packages/google_maps_flutter/google_maps_flutter_android/android/build/intermediates/res/merged/debug/drawable-xxhdpi-v4/common_google_signin_btn_text_dark_normal_background.9.png",
+        "source": "/Users/luizcarvalho/.gradle/caches/transforms-3/4ae88a2ce76a230a4535c562832197a0/transformed/jetified-play-services-base-18.0.1/res/drawable-xxhdpi-v4/common_google_signin_btn_text_dark_normal_background.9.png"
+    },
+    {
+        "merged": "/Users/luizcarvalho/Documents/work/repos/plugins/packages/google_maps_flutter/google_maps_flutter_android/android/build/intermediates/res/merged/debug/drawable-xxhdpi-v4/common_google_signin_btn_icon_light_normal_background.9.png",
+        "source": "/Users/luizcarvalho/.gradle/caches/transforms-3/4ae88a2ce76a230a4535c562832197a0/transformed/jetified-play-services-base-18.0.1/res/drawable-xxhdpi-v4/common_google_signin_btn_icon_light_normal_background.9.png"
+    },
+    {
+        "merged": "/Users/luizcarvalho/Documents/work/repos/plugins/packages/google_maps_flutter/google_maps_flutter_android/android/build/intermediates/res/merged/debug/drawable-xxhdpi-v4/googleg_disabled_color_18.png",
+        "source": "/Users/luizcarvalho/.gradle/caches/transforms-3/4ae88a2ce76a230a4535c562832197a0/transformed/jetified-play-services-base-18.0.1/res/drawable-xxhdpi-v4/googleg_disabled_color_18.png"
+    },
+    {
+        "merged": "/Users/luizcarvalho/Documents/work/repos/plugins/packages/google_maps_flutter/google_maps_flutter_android/android/build/intermediates/res/merged/debug/drawable-xxhdpi-v4/googleg_standard_color_18.png",
+        "source": "/Users/luizcarvalho/.gradle/caches/transforms-3/4ae88a2ce76a230a4535c562832197a0/transformed/jetified-play-services-base-18.0.1/res/drawable-xxhdpi-v4/googleg_standard_color_18.png"
+    },
+    {
+        "merged": "/Users/luizcarvalho/Documents/work/repos/plugins/packages/google_maps_flutter/google_maps_flutter_android/android/build/intermediates/res/merged/debug/drawable-xxhdpi-v4/common_google_signin_btn_text_light_normal_background.9.png",
+        "source": "/Users/luizcarvalho/.gradle/caches/transforms-3/4ae88a2ce76a230a4535c562832197a0/transformed/jetified-play-services-base-18.0.1/res/drawable-xxhdpi-v4/common_google_signin_btn_text_light_normal_background.9.png"
+    }
+]
