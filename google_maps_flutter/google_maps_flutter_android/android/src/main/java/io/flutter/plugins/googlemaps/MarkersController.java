@@ -26,6 +26,7 @@ import io.flutter.plugin.common.MethodChannel;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 class MarkersController {
 
@@ -33,97 +34,25 @@ class MarkersController {
   private final Map<String, String> googleMapsMarkerIdToDartMarkerId;
   private final MethodChannel methodChannel;
   private GoogleMap googleMap;
-  private Bitmap defaultCountMarker;
-  private final int size = 150;
+  private CozyMarkerBuilder cozyMarkerBuilder;
 
-  MarkersController(MethodChannel methodChannel) {
+  MarkersController(MethodChannel methodChannel, CozyMarkerBuilder cozyMarkerBuilder) {
     this.markerIdToController = new HashMap<>();
     this.googleMapsMarkerIdToDartMarkerId = new HashMap<>();
     this.methodChannel = methodChannel;
-    this.defaultCountMarker = createCountDefaultMarker();
-  }
-
-  private Bitmap createCountDefaultMarker() {
-    Paint paint = new Paint();
-    paint.setColor(Color.WHITE);
-    paint.setAntiAlias(true);
-    Bitmap marker = Bitmap.createBitmap(size + 24, size + 24, Bitmap.Config.ARGB_8888);
-    Canvas canvas = new Canvas(marker);
-    canvas.drawCircle(size / 2f, size / 2f, size / 2f, paint);
-    Rect rect = new Rect(0, 0, size, size);
-    canvas.drawBitmap(marker, rect, rect, paint);
-    int shadowWidth = size + 2;
-    Paint shadow = new Paint();
-    shadow.setColor(Color.BLACK);
-    shadow.setStyle(Paint.Style.STROKE);
-    shadow.setAlpha(25);
-    shadow.setStrokeWidth(4);
-    shadow.setAntiAlias(true);
-    canvas.drawCircle(shadowWidth / 2f, shadowWidth / 2f, (shadowWidth / 2f) - 2f, shadow);
-    return marker;
-  }
-
-  private Bitmap createPriceMarker(String text) {
-    Paint textPaint = new Paint();
-    textPaint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-    textPaint.setTextSize(size / 4f);
-    textPaint.setAntiAlias(true);
-    textPaint.setTextAlign(Paint.Align.LEFT);
-    float textWidth = textPaint.measureText(text);
-    Bitmap marker = Bitmap.createBitmap((size / 2) + (int)textWidth, size / 2, Bitmap.Config.ARGB_8888);
-    Canvas canvas = new Canvas(marker);
-    Paint paint = new Paint();
-    paint.setColor(Color.WHITE);
-    paint.setAntiAlias(true);
-    canvas.drawRoundRect(new RectF(0, 0, (size / 2f)
-            + textWidth, size / 2f), size / 1.5f, size / 1.5f, paint);
-    Paint shadow = new Paint();
-    int shadowWidth = size + 2;
-    shadow.setColor(Color.BLACK);
-    shadow.setStyle(Paint.Style.STROKE);
-    shadow.setAlpha(25);
-    shadow.setStrokeWidth(4);
-    shadow.setAntiAlias(true);
-    canvas.drawRoundRect(new RectF(0, 0, (shadowWidth / 2f)
-            + textWidth, shadowWidth / 2f), shadowWidth / 1.5f, shadowWidth / 1.5f, shadow);
-
-    Rect bounds = new Rect();
-    paint.getTextBounds(text, 0, text.length(), bounds);
-    float dx = size / 3f - bounds.width() / 3f - bounds.left;
-    float dy = size / 3f + bounds.height() / 3f - bounds.bottom;
-
-    canvas.drawText(text, dx, dy, textPaint);
-    return marker;
-  }
-
-  private Bitmap addCountMarkerText(String text) {
-    Bitmap marker = Bitmap.createBitmap(defaultCountMarker);
-    Canvas canvas = new Canvas(marker);
-    Paint paint = new Paint();
-    Rect bounds = new Rect();
-
-    paint.setColor(Color.BLACK);
-    paint.setTypeface(Typeface.create(Typeface.DEFAULT, Typeface.BOLD));
-    paint.setTextSize(size / 3f);
-    paint.setAntiAlias(true);
-    paint.setTextAlign(Paint.Align.LEFT);
-
-    paint.getTextBounds(text, 0, text.length(), bounds);
-    float dx = size / 2f - bounds.width() / 2f - bounds.left;
-    float dy = size / 2f + bounds.height() / 2f - bounds.bottom;
-
-    canvas.drawText(text, dx, dy, paint);
-    return marker;
+    this.cozyMarkerBuilder = cozyMarkerBuilder;
   }
 
 
   private Bitmap createBitmapFromMarker(Object marker) {
     final Map<?, ?> data = (Map<?, ?>) marker;
     if(data.get("count") != null) {
-      return addCountMarkerText((String) data.get("count").toString());
+      String count = Objects.requireNonNull(data.get("count")).toString();
+      return cozyMarkerBuilder.addCountMarkerText(count);
     };
     if(data.get("price") != null) {
-      return createPriceMarker((String) data.get("price"));
+      String price = Objects.requireNonNull(data.get("price")).toString();
+      return cozyMarkerBuilder.addCountMarkerText(price);
     };
     return null;
   }

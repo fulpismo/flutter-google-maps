@@ -100,7 +100,7 @@ final class GoogleMapController
         new MethodChannel(binaryMessenger, "plugins.flutter.dev/google_maps_android_" + id);
     methodChannel.setMethodCallHandler(this);
     this.lifecycleProvider = lifecycleProvider;
-    this.markersController = new MarkersController(methodChannel);
+    this.markersController = new MarkersController(methodChannel, new CozyMarkerBuilder(150));
     this.polygonsController = new PolygonsController(methodChannel, density);
     this.polylinesController = new PolylinesController(methodChannel, density);
     this.circlesController = new CirclesController(methodChannel, density);
@@ -306,10 +306,6 @@ final class GoogleMapController
         {
           invalidateMapIfNeeded();
           List<Object> markersToAdd = call.argument("markersToAdd");
-          for (Object marker : markersToAdd) {
-            Map<String, Object> markerMap = (Map<String, Object>) marker;
-            System.out.println("teste" + markerMap.toString());
-          }
           markersController.addMarkers(markersToAdd);
           List<Object> markersToChange = call.argument("markersToChange");
           markersController.changeMarkers(markersToChange);
