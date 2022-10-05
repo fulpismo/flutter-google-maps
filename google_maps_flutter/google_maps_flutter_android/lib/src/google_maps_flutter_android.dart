@@ -284,9 +284,7 @@ class GoogleMapsFlutterAndroid extends GoogleMapsFlutterPlatform {
     MarkerUpdates markerUpdates, {
     required int mapId,
   }) {
-    assert(markerUpdates != null);
-    print("markers to add: ${markerUpdates.markersToAdd}");
-    print("markers to update: ${markerUpdates.markersToChange}");
+    print("-------------> ${markerUpdates.toString()}");
     return _channel(mapId).invokeMethod<void>(
       'markers#update',
       markerUpdates.toJson(),

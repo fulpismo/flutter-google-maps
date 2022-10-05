@@ -4,17 +4,7 @@
 
 package io.flutter.plugins.googlemaps;
 
-import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
-import android.graphics.RectF;
-import android.graphics.Typeface;
-import android.view.View;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -34,7 +24,7 @@ class MarkersController {
   private final Map<String, String> googleMapsMarkerIdToDartMarkerId;
   private final MethodChannel methodChannel;
   private GoogleMap googleMap;
-  private CozyMarkerBuilder cozyMarkerBuilder;
+  private final CozyMarkerBuilder cozyMarkerBuilder;
 
   MarkersController(MethodChannel methodChannel, CozyMarkerBuilder cozyMarkerBuilder) {
     this.markerIdToController = new HashMap<>();
@@ -48,11 +38,11 @@ class MarkersController {
     final Map<?, ?> data = (Map<?, ?>) marker;
     if(data.get("count") != null) {
       String count = Objects.requireNonNull(data.get("count")).toString();
-      return cozyMarkerBuilder.addCountMarkerText(count);
+      return cozyMarkerBuilder.addClusterMarkerText(count);
     };
     if(data.get("price") != null) {
       String price = Objects.requireNonNull(data.get("price")).toString();
-      return cozyMarkerBuilder.addCountMarkerText(price);
+      return cozyMarkerBuilder.addBubbleMarkerText(price);
     };
     return null;
   }

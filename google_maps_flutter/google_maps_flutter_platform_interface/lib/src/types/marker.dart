@@ -140,6 +140,7 @@ class Marker implements MapsObject<Marker> {
   /// * reports [onDragEnd] events
   const Marker({
     required this.markerId,
+    this.icon = BitmapDescriptor.defaultMarker,
     this.alpha = 1.0,
     this.anchor = const Offset(0.5, 1.0),
     this.consumeTapEvents = false,
@@ -156,13 +157,16 @@ class Marker implements MapsObject<Marker> {
     this.onDrag,
     this.onDragStart,
     this.onDragEnd,
-  }) : assert(alpha == null || (0.0 <= alpha && alpha <= 1.0));
+  }) : assert(0.0 <= alpha && alpha <= 1.0);
 
   /// Uniquely identifies a [Marker].
   final MarkerId markerId;
 
   final int? count;
   final String? price;
+
+  /// A description of the bitmap used to draw the marker icon.
+  final BitmapDescriptor? icon;
 
   @override
   MarkerId get mapsId => markerId;
@@ -241,6 +245,8 @@ class Marker implements MapsObject<Marker> {
     bool? visibleParam,
     double? zIndexParam,
     VoidCallback? onTapParam,
+    int? countParam,
+    String? priceParam,
     ValueChanged<LatLng>? onDragStartParam,
     ValueChanged<LatLng>? onDragParam,
     ValueChanged<LatLng>? onDragEndParam,
@@ -255,8 +261,9 @@ class Marker implements MapsObject<Marker> {
       infoWindow: infoWindowParam ?? infoWindow,
       position: positionParam ?? position,
       rotation: rotationParam ?? rotation,
-      count: count ?? count,
-      price: price ?? price,
+      count: countParam ?? count,
+      icon: iconParam ?? icon,
+      price: priceParam ?? price,
       visible: visibleParam ?? visible,
       zIndex: zIndexParam ?? zIndex,
       onTap: onTapParam ?? onTap,
@@ -288,6 +295,7 @@ class Marker implements MapsObject<Marker> {
     addIfPresent('anchor', _offsetToJson(anchor));
     addIfPresent('consumeTapEvents', consumeTapEvents);
     addIfPresent('draggable', draggable);
+    addIfPresent('icon', icon);
     addIfPresent('flat', flat);
     addIfPresent('infoWindow', infoWindow._toJson());
     addIfPresent('position', position.toJson());
@@ -310,6 +318,7 @@ class Marker implements MapsObject<Marker> {
         markerId == other.markerId &&
         alpha == other.alpha &&
         anchor == other.anchor &&
+        icon == other.icon &&
         consumeTapEvents == other.consumeTapEvents &&
         draggable == other.draggable &&
         flat == other.flat &&
@@ -331,6 +340,6 @@ class Marker implements MapsObject<Marker> {
         'consumeTapEvents: $consumeTapEvents, count: $count, price: $price, draggable: $draggable, flat: $flat, '
         'infoWindow: $infoWindow, position: $position, rotation: $rotation, '
         'visible: $visible, zIndex: $zIndex, onTap: $onTap, onDragStart: $onDragStart, '
-        'onDrag: $onDrag, onDragEnd: $onDragEnd}';
+        'onDrag: $onDrag, onDragEnd: $onDragEnd, icon: $icon}';
   }
 }
