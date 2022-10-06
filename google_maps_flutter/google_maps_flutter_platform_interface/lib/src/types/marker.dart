@@ -295,14 +295,16 @@ class Marker implements MapsObject<Marker> {
     addIfPresent('anchor', _offsetToJson(anchor));
     addIfPresent('consumeTapEvents', consumeTapEvents);
     addIfPresent('draggable', draggable);
-    addIfPresent('icon', icon);
+    if (icon != null) {
+      addIfPresent('icon', icon!.toJson());
+    }
     addIfPresent('flat', flat);
     addIfPresent('infoWindow', infoWindow._toJson());
     addIfPresent('position', position.toJson());
     addIfPresent('rotation', rotation);
     addIfPresent('visible', visible);
     addIfPresent('zIndex', zIndex);
-    print("json ${json.toString()}");
+    // print("json ${json.toString()}");
     return json;
   }
 
