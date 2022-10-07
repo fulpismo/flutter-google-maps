@@ -1,5 +1,5 @@
 name: google_maps_flutter_ios
-publish_to: none
+
 description: iOS implementation of the google_maps_flutter plugin.
 version: 2.1.11
 
@@ -21,7 +21,7 @@ dependencies:
   google_maps_flutter_platform_interface:
     git:
       url: https://github.com/fulpismo/flutter-google-maps-custom.git
-      ref: master
+      ref: teste
       path: google_maps_flutter/google_maps_flutter_platform_interface  
   stream_transform: ^2.0.0
 

@@ -1,5 +1,5 @@
 name: google_maps_flutter_web
-publish_to: none
+
 description: Web platform implementation of google_maps_flutter
 repository: https://github.com/flutter/plugins/tree/main/packages/google_maps_flutter/google_maps_flutter_web
 issue_tracker: https://github.com/flutter/flutter/issues?q=is%3Aissue+is%3Aopen+label%3A%22p%3A+maps%22
@@ -26,7 +26,7 @@ dependencies:
   google_maps_flutter_platform_interface: 
     git:
       url: https://github.com/fulpismo/flutter-google-maps-custom.git
-      ref: master
+      ref: teste
       path: google_maps_flutter/google_maps_flutter_platform_interface    
   sanitize_html: ^2.0.0
   stream_transform: ^2.0.0
