@@ -83,12 +83,7 @@ public class CozyMarkerBuilder {
         pointer.close();
         return pointer;
     }
-
-    private Bitmap getBubbleBitmap(RectF rect) {
-        canvas.drawRoundRect(rect, 10, 10, getBackgroundColor());
-        return marker;
-    }
-
+    
     public Bitmap addClusterMarkerText(String text) {
         Bitmap marker = Bitmap.createBitmap(this.defaultClusterMarker);
         Canvas canvas = new Canvas(marker);
