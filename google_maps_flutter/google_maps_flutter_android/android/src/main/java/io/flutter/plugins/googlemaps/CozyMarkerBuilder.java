@@ -83,7 +83,7 @@ public class CozyMarkerBuilder {
         pointer.close();
         return pointer;
     }
-    
+
     public Bitmap addClusterMarkerText(String text) {
         Bitmap marker = Bitmap.createBitmap(this.defaultClusterMarker);
         Canvas canvas = new Canvas(marker);
@@ -97,15 +97,16 @@ public class CozyMarkerBuilder {
     }
 
     public Bitmap addBubbleMarkerText(String text) {
+        int space = 2;
         Rect rect = new Rect();
         bubbleTextPaint.getTextBounds(text, 0, text.length(), rect);
-        float width = rect.width();
-        float height = rect.height();
-        Bitmap marker = Bitmap.createBitmap((int) width, (int) (height + bubblePointSize), Bitmap.Config.ARGB_8888);
+        Bitmap marker = Bitmap.createBitmap((rect.width() + space), (rect.height() + space + bubblePointSize), Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(marker);
-        RectF shadow = new RectF(rect.left + 2.5f, rect.top + 2.5f, rect.top + 2.5f,
-                rect.bottom + 2.5f);
+        float shadowSpace = space / 2f;
+        RectF shadow = new RectF(rect.left + shadowSpace, rect.top + shadowSpace, rect.top + shadowSpace,
+                rect.bottom + shadowSpace);
         canvas.drawRoundRect(shadow, 10, 10, getShadowPaint());
+        canvas.drawRoundRect(shadow, 10, 10, getBackgroundColor());
         float markerWidth = marker.getWidth();
         float markerHeight = marker.getHeight();
         float dx = (markerWidth / 2f) - (rect.width() / 2f) - rect.left;
