@@ -22,7 +22,7 @@ dependencies:
     git:
       url: https://github.com/fulpismo/flutter-google-maps.git
       ref: master
-      path: google_maps_flutter/google_maps_flutter_platform_interface  
+      path: google_maps_flutter_platform_interface  
   stream_transform: ^2.0.0
 
 dev_dependencies:
