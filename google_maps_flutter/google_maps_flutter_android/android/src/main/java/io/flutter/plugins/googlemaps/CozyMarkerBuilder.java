@@ -9,7 +9,6 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.graphics.Typeface;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
@@ -24,6 +23,8 @@ public class CozyMarkerBuilder {
     CozyMarkerBuilder(int size, int bubblePointSize, Context context) {
         this.bubblePointSize = bubblePointSize;
         clusterRect = new Rect();
+        bubbleRect = new RectF(0.0f, 0.0f, size, size / 3f);
+        defaultBubbleMarker = getBubbleBitmap(bubbleRect, bubblePointSize);
         defaultClusterMarker = getClusterBitmap(size);
         clusterTextPaint = setTextPaint(size / 3f, context);
         bubbleTextPaint = setTextPaint(size / 4f, context);
@@ -63,32 +64,16 @@ public class CozyMarkerBuilder {
     private static Bitmap getClusterBitmap(int size) {
         Bitmap marker = Bitmap.createBitmap(size, size, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(marker);
-        int shadowWidth = size + 2;
-        canvas.drawCircle(shadowWidth / 2f, (shadowWidth / 2f) + 2.5f, (shadowWidth / 2.5f), getShadowPaint());
         canvas.drawCircle(size / 2f, size / 2f, size / 2.2f, getBackgroundColor());
         return marker;
     }
 
-    private Path getBubblePoint(Bitmap marker) {
-        Path pointer = new Path();
-        pointer.setFillType(Path.FillType.EVEN_ODD);
-        float width = marker.getWidth();
-        float height = marker.getHeight() - bubblePointSize;
-        pointer.moveTo(width / 2f - bubblePointSize, height);
-        pointer.lineTo(width / 2f + bubblePointSize, height);
-        pointer.lineTo(width / 2f, height + bubblePointSize);
-        pointer.lineTo(width / 2f - bubblePointSize, height);
-        pointer.close();
-        return pointer;
-    }
-
-
-    private Bitmap getBubbleBitmap(RectF bubbleRect) {
+    private static Bitmap getBubbleBitmap(RectF bubbleRect, int bubblePointSize) {
+        float width = bubbleRect.width();
         float height = bubbleRect.height();
-        Bitmap marker = Bitmap.createBitmap((int)bubbleRect.width() + 40, (int)(height + bubblePointSize), Bitmap.Config.ARGB_8888);
+        Bitmap marker = Bitmap.createBitmap((int) bubbleRect.width() + 40, (int) (height + bubblePointSize),
+                Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(marker);
-        RectF shadow = new RectF(bubbleRect.left + 2.5f, bubbleRect.top + 2.5f, bubbleRect.top + 2.5f, bubbleRect.bottom + 2.5f);
-        canvas.drawRoundRect(shadow, 10, 10, getShadowPaint());
         canvas.drawRoundRect(bubbleRect, 10, 10, getBackgroundColor());
         return marker;
     }
@@ -105,10 +90,34 @@ public class CozyMarkerBuilder {
         return marker;
     }
 
+    private Bitmap createBubbleBitmap(Rect rect) {
+        if (rect.width() < this.defaultBubbleMarker.getWidth()) {
+            return Bitmap.createBitmap(this.defaultBubbleMarker);
+        }
+        int defaultMarkerHeight = this.defaultBubbleMarker.getHeight();
+        return Bitmap.createScaledBitmap(this.defaultBubbleMarker, rect.width() + 30, defaultMarkerHeight, false);
+    }
+
+    private Path getBubblePoint(Bitmap marker) {
+        Path pointer = new Path();
+        pointer.setFillType(Path.FillType.EVEN_ODD);
+        float width = marker.getWidth();
+        float height = marker.getHeight() - bubblePointSize;
+        pointer.moveTo(width / 2f - bubblePointSize, height);
+        pointer.lineTo(width / 2f + bubblePointSize, height);
+        pointer.lineTo(width / 2f, height + bubblePointSize);
+        pointer.lineTo(width / 2f - bubblePointSize, height);
+        pointer.close();
+        return pointer;
+    }
+
     public Bitmap addBubbleMarkerText(String text) {
-        Rect r = new Rect();
-        bubbleTextPaint.getTextBounds(text, 0, text.length(), r);
-        Bitmap marker = getBubbleBitmap(new RectF(r));
+        Rect rect = new Rect((int) bubbleRect.left,
+                (int) bubbleRect.top,
+                (int) bubbleRect.right,
+                (int) bubbleRect.bottom);
+        bubbleTextPaint.getTextBounds(text, 0, text.length(), rect);
+        Bitmap marker = createBubbleBitmap(rect);
         Canvas canvas = new Canvas(marker);
         float width = marker.getWidth();
         float height = marker.getHeight();
@@ -118,6 +127,5 @@ public class CozyMarkerBuilder {
         canvas.drawPath(getBubblePoint(marker), getBackgroundColor());
         return marker;
     }
-
 
 }
