@@ -88,7 +88,6 @@ public class GoogleMapControllerTest {
       googleMapController.onMapReady(mockGoogleMap);
 
       MethodChannel.Result result = mock(MethodChannel.Result.class);
-      System.out.println(methodName);
       googleMapController.onMethodCall(
           new MethodCall(methodName, new HashMap<String, Object>()), result);
 
