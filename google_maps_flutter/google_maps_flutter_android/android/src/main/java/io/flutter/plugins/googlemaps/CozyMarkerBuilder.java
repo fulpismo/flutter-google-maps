@@ -19,6 +19,8 @@ public class CozyMarkerBuilder {
     private final Paint clusterTextPaint;
     private final Paint bubbleTextPaint;
     private final Rect clusterRect;
+    private final RectF bubbleRect;
+    private final Bitmap defaultBubbleMarker;
 
     CozyMarkerBuilder(int size, int bubblePointSize, Context context) {
         this.bubblePointSize = bubblePointSize;
@@ -121,8 +123,8 @@ public class CozyMarkerBuilder {
         Canvas canvas = new Canvas(marker);
         float width = marker.getWidth();
         float height = marker.getHeight();
-        float dx = (width / 2f) - (r.width() / 2f) - r.left;
-        float dy = (height / 2.5f) + (r.height() / 2.5f) - r.bottom;
+        float dx = (width / 2f) - (rect.width() / 2f) - rect.left;
+        float dy = (height / 2.5f) + (rect.height() / 2.5f) - rect.bottom;
         canvas.drawText(text, dx, dy, bubbleTextPaint);
         canvas.drawPath(getBubblePoint(marker), getBackgroundColor());
         return marker;
